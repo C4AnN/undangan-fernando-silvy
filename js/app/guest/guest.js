@@ -10,7 +10,7 @@ import { lang } from '../../common/language.js';
 import { storage } from '../../common/storage.js';
 import { session } from '../../common/session.js';
 import { offline } from '../../common/offline.js';
-import { comment } from '../components/comment.js';
+// Comment system - simple implementation
 import * as confetti from '../../libs/confetti.js';
 
 export const guest = (() => {
@@ -29,7 +29,8 @@ export const guest = (() => {
      * @returns {void}
      */
     const countDownDate = () => {
-        const count = (new Date(document.body.getAttribute('data-time').replace(' ', 'T'))).getTime();
+        // Target date: 19 Agustus 2026 pukul 08:00 WIB (UTC+7)
+        const count = new Date('2026-08-19T08:00:00+07:00').getTime();
 
         /**
          * @param {number} num 
@@ -43,7 +44,16 @@ export const guest = (() => {
         const second = document.getElementById('second');
 
         const updateCountdown = () => {
-            const distance = Math.abs(count - Date.now());
+            const distance = count - Date.now();
+
+            // Jika sudah lewat target date, tampilkan 00:00:00:00
+            if (distance < 0) {
+                day.textContent = '00';
+                hour.textContent = '00';
+                minute.textContent = '00';
+                second.textContent = '00';
+                return;
+            }
 
             day.textContent = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
             hour.textContent = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
@@ -254,11 +264,11 @@ export const guest = (() => {
         const url = new URL('https://calendar.google.com/calendar/render');
         const data = new URLSearchParams({
             action: 'TEMPLATE',
-            text: 'The Wedding of Wahyu and Riski',
-            dates: `${formatDate('2023-03-15 10:00')}/${formatDate('2023-03-15 11:00')}`,
+            text: 'The Wedding of Fernando Candra Yulianto & Silvy Rohmania Dewi',
+            dates: `${formatDate('2026-08-19 08:00')}/${formatDate('2026-08-19 11:00')}`,
             details: 'Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berkenan menghadiri acara pernikahan kami. Terima kasih atas perhatian dan doa restu Anda, yang menjadi kebahagiaan serta kehormatan besar bagi kami.',
-            location: 'RT 10 RW 02, Desa Pajerukan, Kec. Kalibagor, Kab. Banyumas, Jawa Tengah 53191.',
-            ctz: config.get('tz'),
+            location: 'Loram Kulon, Kec. Jati, Kabupaten Kudus, Jawa Tengah 59344',
+            ctz: config?.get('tz') || 'Asia/Jakarta',
         });
 
         url.search = data.toString();
@@ -318,7 +328,7 @@ export const guest = (() => {
     const domLoaded = () => {
         lang.init();
         offline.init();
-        comment.init();
+        // comment.init() removed
         progress.init();
 
         config = storage('config');
@@ -339,9 +349,8 @@ export const guest = (() => {
         });
 
         if (!token || token.length <= 0) {
-            document.getElementById('comment')?.remove();
-            document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
-
+            // Comment section already removed from HTML
+            
             vid.load();
             img.load();
             aud.load();
@@ -349,9 +358,8 @@ export const guest = (() => {
         }
 
         if (token && token.length > 0) {
-            // add 2 progress for config and comment.
+            // add 1 progress for config only (comment removed).
             // before img.load();
-            progress.add();
             progress.add();
 
             // if don't have data-src.
@@ -372,13 +380,20 @@ export const guest = (() => {
                 aud.load();
                 lib.load({ confetti: data.is_confetti_animation });
 
-                comment.show()
-                    .then(() => progress.complete('comment'))
-                    .catch(() => progress.invalid('comment'));
+                // comment.show() removed
 
             }).catch(() => progress.invalid('config'));
 
             window.addEventListener('load', load);
+        }
+    };
+
+    /**
+     * Simple comment placeholder to prevent errors
+     */
+    const comment = {
+        send: () => {
+            alert('Fitur komentar telah dinonaktifkan');
         }
     };
 
@@ -389,12 +404,15 @@ export const guest = (() => {
         theme.init();
         session.init();
 
+        // Add comment object to window for onclick handlers
+        window.comment = comment;
+
         if (session.isAdmin()) {
             storage('user').clear();
             storage('owns').clear();
             storage('likes').clear();
             storage('session').clear();
-            storage('comment').clear();
+            // storage('comment').clear() removed
         }
 
         document.addEventListener('DOMContentLoaded', domLoaded);
@@ -402,7 +420,7 @@ export const guest = (() => {
         return {
             util,
             theme,
-            comment,
+            // comment removed
             guest: {
                 open,
                 modal,

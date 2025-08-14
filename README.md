@@ -1,13 +1,13 @@
-# 💌 Template website undangan pernikahan sederhana
+# � Website Undangan Pernikahan
 
-![Thumbnail](/assets/images/banner.webp)
+**Fernando Candra Yulianto, S.Kom & Silvy Rohmania Dewi, S.Pd**
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cef32dbf-f26f-4865-84a9-b85a439c9994/deploy-status)](https://app.netlify.com/sites/ulems/deploys)
-[![Hits](https://dikit.my.id/0b3y8q)](https://cie.my.id)
-[![GitHub repo size](https://img.shields.io/github/repo-size/dewanakl/undangan?color=brightgreen)](https://shields.io)
-[![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
+> Rabu, 19 Agustus 2026 | Loram Kulon, Kudus, Jawa Tengah
 
-## 🚀 Demo
+![Wedding Photo](assets/images/IMG_6218.jpg)
+
+## 🌐 Live Website
+🔗 **https://c4ann.github.io/undangan-fernando-silvy**
 Untuk kamu yang ingin melihat demo terlebih dahulu:
 
 [https://ulems.my.id/?to=Teman teman semua](https://ulems.my.id/?to=Teman%20teman%20semua)
