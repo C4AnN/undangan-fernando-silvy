@@ -1,4 +1,4 @@
-# � Website Undangan Pernikahan
+# Website Undangan Pernikahan
 
 **Fernando Candra Yulianto, S.Kom & Silvy Rohmania Dewi, S.Pd**
 
